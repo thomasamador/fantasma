@@ -1,0 +1,24 @@
+{
+  "name": "fantasma",
+  "version": "1.0.0",
+  "description": "This is my testbed for theme development with Ghost",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasamador/fantasma.git"
+  },
+  "keywords": [
+    "ghost",
+    "theme",
+    "test"
+  ],
+  "author": "Thomas Amador",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thomasamador/fantasma/issues"
+  },
+  "homepage": "https://github.com/thomasamador/fantasma#readme"
+}
