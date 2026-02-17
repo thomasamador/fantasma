@@ -1,0 +1,65 @@
+{{!--
+=============================================================================
+STORIES PAGE TEMPLATE
+=============================================================================
+
+Custom page template for the /stories/ page.
+Displays a list of all posts tagged with #story.
+
+SETUP:
+1. Create a page in Ghost with slug "stories"
+2. Add title and optional description (custom_excerpt)
+3. Posts tagged with #story will be listed automatically
+
+LAYOUT:
+- Card layout with feature image thumbnail and text
+- Shows title, excerpt, date, and reading time
+
+CSS: See assets/css/custom.css §12 (Stories Page)
+--}}
+{{!< default}}
+
+{{#post}}
+<section class="stories-page outer">
+    <div class="inner">
+        <header class="stories-header">
+            <h1 class="stories-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="stories-description">{{custom_excerpt}}</p>
+            {{/if}}
+        </header>
+        
+        <div class="stories-list">
+            {{#get "posts" filter="tag:hash-story" limit="all" include="tags"}}
+                {{#foreach posts}}
+                    <article class="story-item">
+                        {{#if feature_image}}
+                            <a href="{{url}}" class="story-image-link">
+                                <img 
+                                    src="{{img_url feature_image size="m"}}"
+                                    alt="{{title}}"
+                                    loading="lazy"
+                                >
+                            </a>
+                        {{/if}}
+                        <div class="story-content">
+                            <a href="{{url}}" class="story-link">
+                                <h2 class="story-item-title">{{title}}</h2>
+                                {{#if excerpt}}
+                                    <p class="story-item-excerpt">{{excerpt words="40"}}</p>
+                                {{/if}}
+                            </a>
+                            <div class="story-item-meta">
+                                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+                                {{#if reading_time}}
+                                    <span class="reading-time">{{reading_time}} min read</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </article>
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>
+{{/post}}

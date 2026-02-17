@@ -1,0 +1,81 @@
+{{!--
+=============================================================================
+INDEX TEMPLATE - Homepage & Post Listings
+=============================================================================
+
+Displays the main post feed, used for:
+- Homepage (with hero section)
+- Paginated post listings (/page/2/, etc.)
+
+SECTIONS:
+1. Hero Section - Only shown on homepage (#is "home")
+   - Site title and description
+   - Newsletter signup (if members enabled and not logged in)
+   - Welcome message (if logged in)
+
+2. Post Feed - List of posts
+   - Uses partials/post-card.hbs for each post
+   - Pagination at bottom
+
+CSS CLASSES (see assets/css/custom.css §6-§7):
+- .gh-hero: Hero section container
+- .gh-feed: Post feed section
+- .post-feed: Post cards container
+
+TO CUSTOMIZE:
+- Hero content: Edit the {{#is "home"}} block
+- Post display: Edit partials/post-card.hbs
+- Styling: Edit CSS §6 (Hero) and §7 (Post Feed)
+--}}
+{{!< default}}
+
+{{!-- Hero section with newsletter CTA --}}
+{{#is "home"}}
+<section class="gh-hero outer">
+    <div class="gh-hero-inner inner">
+        {{#if @site.cover_image}}
+            <img class="gh-hero-image" src="{{@site.cover_image}}" alt="{{@site.title}}">
+        {{/if}}
+        <div class="gh-hero-content">
+            <h1 class="gh-hero-title">{{@site.title}}</h1>
+            {{#if @site.description}}
+                <p class="gh-hero-description">{{@site.description}}</p>
+            {{/if}}
+            
+            {{#if @site.members_enabled}}
+                {{#unless @member}}
+                    <div class="gh-hero-signup">
+                        <form data-members-form="subscribe" class="gh-hero-form">
+                            <input 
+                                type="email" 
+                                name="email" 
+                                placeholder="your@email.com" 
+                                required 
+                                data-members-email
+                                aria-label="Email address"
+                            >
+                            <button type="submit">Subscribe</button>
+                        </form>
+                        <p class="gh-hero-signup-note">Get new posts delivered to your inbox.</p>
+                    </div>
+                {{else}}
+                    <p class="gh-hero-welcome">Welcome back, {{@member.name}}!</p>
+                {{/unless}}
+            {{/if}}
+        </div>
+    </div>
+</section>
+{{/is}}
+
+{{!-- Main post feed --}}
+<section class="gh-feed outer">
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+                {{> post-card}}
+            {{/foreach}}
+        </div>
+        
+        {{> pagination}}
+    </div>
+</section>

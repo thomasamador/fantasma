@@ -1,0 +1,43 @@
+{{!--
+=============================================================================
+TAG ARCHIVE TEMPLATE
+=============================================================================
+
+Displays posts filtered by tag.
+URL: /tag/{slug}/
+
+STRUCTURE:
+- Archive header with tag name, description, and post count
+- Post feed (uses post-card partial)
+- Pagination
+
+SPECIAL TAG TEMPLATES:
+Internal tags (#tagname) use custom templates:
+- #art   → tag-hash-art.hbs (gallery layout)
+- #essay → tag-hash-essay.hbs
+- #story → tag-hash-story.hbs
+- #note  → tag-hash-note.hbs
+
+CSS: See assets/css/custom.css §11 (Archive Pages)
+--}}
+{{!< default}}
+
+<section class="tag-archive outer">
+    <div class="inner">
+        <header class="archive-header">
+            <h1 class="archive-title">{{tag.name}}</h1>
+            {{#if tag.description}}
+                <p class="archive-description">{{tag.description}}</p>
+            {{/if}}
+            <span class="archive-count">{{plural tag.count.posts empty="No posts" singular="% post" plural="% posts"}}</span>
+        </header>
+        
+        <div class="post-feed">
+            {{#foreach posts}}
+                {{> post-card}}
+            {{/foreach}}
+        </div>
+        
+        {{> pagination}}
+    </div>
+</section>

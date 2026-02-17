@@ -1,0 +1,53 @@
+{{!--
+=============================================================================
+NOTES PAGE TEMPLATE
+=============================================================================
+
+Custom page template for the /notes/ page.
+Displays a list of all posts tagged with #note.
+
+SETUP:
+1. Create a page in Ghost with slug "notes"
+2. Add title and optional description (custom_excerpt)
+3. Posts tagged with #note will be listed automatically
+
+USES:
+- {{get "posts" filter="tag:hash-note"}} to fetch note posts
+- Shows title (if any), excerpt preview, and date
+
+CSS: See assets/css/custom.css §12 (Notes Page)
+--}}
+{{!< default}}
+
+{{#post}}
+<section class="notes-page outer">
+    <div class="inner">
+        <header class="notes-header">
+            <h1 class="notes-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="notes-description">{{custom_excerpt}}</p>
+            {{/if}}
+        </header>
+        
+        <div class="notes-feed">
+            {{#get "posts" filter="tag:hash-note" limit="all" include="tags"}}
+                {{#foreach posts}}
+                    <article class="note-item">
+                        <a href="{{url}}" class="note-link">
+                            <div class="note-content">
+                                {{#if title}}
+                                    <h2 class="note-item-title">{{title}}</h2>
+                                {{/if}}
+                                {{#if excerpt}}
+                                    <p class="note-item-text">{{excerpt words="50"}}</p>
+                                {{/if}}
+                            </div>
+                            <time class="note-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+                        </a>
+                    </article>
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>
+{{/post}}

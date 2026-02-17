@@ -1,0 +1,74 @@
+{{!--
+=============================================================================
+DEFAULT LAYOUT TEMPLATE
+=============================================================================
+
+This is the base template that wraps all pages on the site.
+All other templates extend this using {{!< default}} at the top.
+
+STRUCTURE:
+- <head>: Meta tags, fonts, CSS, Ghost SEO output
+- <body>: .viewport wrapper containing header, content, and footer
+
+INCLUDED PARTIALS:
+- {{> header}} - Site header with navigation (partials/header.hbs)
+- {{> footer}} - Site footer (partials/footer.hbs)
+
+CSS:
+- Pico CSS (CDN) - Base styling framework
+- custom.css - All theme customizations
+
+JS:
+- assets/js/main.js - Mobile menu toggle and interactive components
+
+FONTS (self-hosted in /assets/fonts/):
+- iA Writer Duo V - Body text
+- Mona Sans - Headings
+
+SEE ALSO:
+- assets/css/custom.css for all styling
+- package.json for theme configuration
+--}}
+<!DOCTYPE html>
+<html lang="{{@site.locale}}" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{meta_title}}</title>
+    
+    {{!-- Preload fonts --}}
+    <link rel="preload" as="font" href="{{asset "fonts/iAWriterDuoV.ttf"}}" type="font/ttf" crossorigin>
+    <link rel="preload" as="font" href="{{asset "fonts/Mona-Sans.woff2"}}" type="font/woff2" crossorigin>
+    
+    {{!-- Preload CSS --}}
+    <link rel="preload" as="style" href="{{asset "css/custom.css"}}">
+    
+    {{!-- Pico CSS for base styling --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    
+    {{!-- Custom theme styles --}}
+    <link rel="stylesheet" href="{{asset "css/custom.css"}}">
+    
+    {{!-- Ghost outputs SEO, structured data, and other important meta --}}
+    {{ghost_head}}
+</head>
+<body class="{{body_class}}">
+<div class="viewport">
+
+    {{> header}}
+    
+    <div class="site-content">
+        {{{body}}}
+    </div>
+    
+    {{> footer}}
+
+</div>
+
+{{!-- Theme JavaScript (mobile menu, etc.) --}}
+<script src="{{asset "js/main.js"}}"></script>
+
+{{ghost_foot}}
+</body>
+</html>

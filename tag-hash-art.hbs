@@ -1,0 +1,54 @@
+{{!--
+=============================================================================
+ART TAG ARCHIVE TEMPLATE
+=============================================================================
+
+Gallery layout for posts tagged with #art.
+Automatically used when visiting /tag/hash-art/
+
+LAYOUT:
+- Header with tag name and post count
+- Responsive image grid gallery
+- Hover overlay with title
+
+NOTE: Users typically access art via /sketches/ page (page-sketches.hbs)
+rather than this tag archive directly.
+
+CSS: See assets/css/custom.css §12 (Art Gallery)
+--}}
+{{!< default}}
+
+<header class="gallery-header">
+    <h1>Art</h1>
+    {{#if tag.description}}
+        <p>{{tag.description}}</p>
+    {{/if}}
+    <small>{{plural tag.count.posts empty="No works" singular="% work" plural="% works"}}</small>
+</header>
+
+<section class="art-gallery">
+    {{#foreach posts}}
+        <article class="art-gallery-item">
+            <a href="{{url}}" class="art-gallery-link">
+                {{#if feature_image}}
+                    <img 
+                        src="{{img_url feature_image size="m"}}" 
+                        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                        loading="lazy"
+                    >
+                {{else}}
+                    <div class="art-gallery-placeholder">
+                        <span>{{title}}</span>
+                    </div>
+                {{/if}}
+            </a>
+            {{#if title}}
+                <h2 class="art-gallery-title">
+                    <a href="{{url}}">{{title}}</a>
+                </h2>
+            {{/if}}
+        </article>
+    {{/foreach}}
+</section>
+
+{{> pagination}}

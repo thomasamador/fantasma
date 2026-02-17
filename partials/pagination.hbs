@@ -1,0 +1,36 @@
+{{!--
+=============================================================================
+PAGINATION PARTIAL
+=============================================================================
+
+Previous/next page navigation for post listings.
+Uses Ghost's built-in pagination helper.
+
+SHOWS:
+- "Newer" link (if not on first page)
+- Current page number and total
+- "Older" link (if not on last page)
+
+CSS: See assets/css/custom.css §10 (Pagination)
+--}}
+{{#if pagination}}
+    {{#if pagination.pages}}
+        <nav class="pagination" aria-label="Pagination">
+            {{#if pagination.prev}}
+                <a href="{{pagination.prev}}" aria-label="Previous page">&larr; Newer</a>
+            {{else}}
+                <span></span>
+            {{/if}}
+            
+            <span class="pagination-info">
+                Page {{pagination.page}} of {{pagination.pages}}
+            </span>
+            
+            {{#if pagination.next}}
+                <a href="{{pagination.next}}" aria-label="Next page">Older &rarr;</a>
+            {{else}}
+                <span></span>
+            {{/if}}
+        </nav>
+    {{/if}}
+{{/if}}

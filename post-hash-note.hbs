@@ -1,0 +1,53 @@
+{{!--
+=============================================================================
+NOTE POST TEMPLATE
+=============================================================================
+
+Template for short, tweet-like posts.
+Triggered by adding the internal tag #note to a post.
+
+PHILOSOPHY:
+Notes are intentionally minimal - no borders, no backgrounds,
+just text. Ideal for quick thoughts, observations, or links.
+
+LAYOUT:
+- Narrow content width (55ch)
+- Optional title (notes often don't need one)
+- Larger body text for emphasis
+- Simple footer with date and tags
+
+CSS CLASSES (see assets/css/custom.css §12):
+- .post-note: Article wrapper
+- .note-content: Main text
+- .note-footer: Date and tags
+--}}
+{{!< default}}
+
+{{#post}}
+<article class="post post-note {{post_class}}">
+    <div class="note-wrapper">
+        {{!-- Optional title - notes often don't need one --}}
+        {{#if title}}
+            <h1 class="note-title">{{title}}</h1>
+        {{/if}}
+
+        {{!-- The thought/observation --}}
+        <div class="note-content">
+            {{content}}
+        </div>
+
+        {{!-- Minimal meta --}}
+        <footer class="note-footer">
+            <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
+            
+            {{#if primary_tag}}
+                <span class="note-tags">
+                    {{#foreach tags visibility="public"}}
+                        <a href="{{url}}">{{name}}</a>{{#unless @last}}, {{/unless}}
+                    {{/foreach}}
+                </span>
+            {{/if}}
+        </footer>
+    </div>
+</article>
+{{/post}}

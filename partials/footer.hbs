@@ -1,0 +1,32 @@
+{{!--
+=============================================================================
+SITE FOOTER PARTIAL
+=============================================================================
+
+Site footer with copyright, secondary navigation, and credits.
+Included in default.hbs via {{> footer}}
+
+STRUCTURE:
+- .copyright: Year and site name
+- .site-footer-nav: Secondary navigation (from Ghost settings)
+- .gh-powered-by: Ghost attribution link
+
+SECONDARY NAVIGATION:
+Configured in Ghost Admin → Settings → Navigation (Secondary).
+Uses {{navigation type="secondary"}} helper.
+
+CSS: See assets/css/custom.css §10 (Site Footer)
+--}}
+<footer class="site-footer outer">
+    <div class="inner">
+        <section class="copyright">
+            &copy; {{date format="YYYY"}} <a href="{{@site.url}}">{{@site.title}}</a>
+        </section>
+        <nav class="site-footer-nav">
+            {{navigation type="secondary"}}
+        </nav>
+        <div class="gh-powered-by">
+            <a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a>
+        </div>
+    </div>
+</footer>

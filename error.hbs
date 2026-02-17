@@ -1,0 +1,32 @@
+{{!--
+=============================================================================
+ERROR PAGE TEMPLATE
+=============================================================================
+
+Displays error pages (404, 500, etc.).
+
+VARIABLES AVAILABLE:
+- {{statusCode}}: HTTP status code (404, 500, etc.)
+- {{message}}: Error message
+
+CUSTOM MESSAGES:
+Use {{#is "404"}} to show different content for specific errors.
+
+CSS: See assets/css/custom.css §10 (Error Page)
+--}}
+{{!< default}}
+
+<section class="error-page outer">
+    <div class="inner">
+        <div class="error-code">{{statusCode}}</div>
+        <h1 class="error-message">{{message}}</h1>
+        <p class="error-description">
+            {{#is "404"}}
+                The page you're looking for doesn't exist or has been moved.
+            {{else}}
+                Something went wrong. Please try again later.
+            {{/is}}
+        </p>
+        <a class="gh-head-button" href="{{@site.url}}">Back to Home</a>
+    </div>
+</section>

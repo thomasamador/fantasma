@@ -1,0 +1,48 @@
+{{!--
+=============================================================================
+AUTHOR ARCHIVE TEMPLATE
+=============================================================================
+
+Displays posts by a specific author.
+URL: /author/{slug}/
+
+STRUCTURE:
+- Author header with avatar, name, bio, location, and post count
+- Post feed (uses post-card partial)
+- Pagination
+
+CSS: See assets/css/custom.css §11 (Archive Pages)
+--}}
+{{!< default}}
+
+<section class="author-archive outer">
+    <div class="inner">
+        <header class="archive-header author-header">
+            {{#if primary_author.profile_image}}
+                <img 
+                    class="author-avatar-large"
+                    src="{{img_url primary_author.profile_image size="m"}}" 
+                    alt="{{primary_author.name}}"
+                >
+            {{/if}}
+            <div class="author-header-content">
+                <h1 class="archive-title">{{primary_author.name}}</h1>
+                {{#if primary_author.bio}}
+                    <p class="archive-description">{{primary_author.bio}}</p>
+                {{/if}}
+                {{#if primary_author.location}}
+                    <span class="author-location">📍 {{primary_author.location}}</span>
+                {{/if}}
+                <span class="archive-count">{{plural primary_author.count.posts empty="No posts" singular="% post" plural="% posts"}}</span>
+            </div>
+        </header>
+        
+        <div class="post-feed">
+            {{#foreach posts}}
+                {{> post-card}}
+            {{/foreach}}
+        </div>
+        
+        {{> pagination}}
+    </div>
+</section>

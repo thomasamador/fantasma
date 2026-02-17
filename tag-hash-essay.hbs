@@ -1,0 +1,60 @@
+{{!--
+=============================================================================
+ESSAY TAG ARCHIVE TEMPLATE
+=============================================================================
+
+List layout for posts tagged with #essay.
+Automatically used when visiting /tag/hash-essay/
+
+LAYOUT:
+- Header with tag name and post count
+- Card list with title, date, reading time, and excerpt
+
+NOTE: Users typically access essays via /essays/ page (page-essays.hbs)
+rather than this tag archive directly.
+
+CSS: See assets/css/custom.css §12 (Essays Listing)
+--}}
+{{!< default}}
+
+<header class="archive-header essays-header">
+    <h1>Essays</h1>
+    {{#if tag.description}}
+        <p>{{tag.description}}</p>
+    {{/if}}
+    <small>{{plural tag.count.posts empty="No essays" singular="% essay" plural="% essays"}}</small>
+</header>
+
+<section class="essays-list">
+    {{#foreach posts}}
+        <article class="essay-card">
+            <header>
+                <h2>
+                    <a href="{{url}}">{{title}}</a>
+                </h2>
+                <div class="essay-card-meta">
+                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
+                    {{#if reading_time}}
+                        <span class="essay-card-reading-time">{{reading_time}} min read</span>
+                    {{/if}}
+                </div>
+            </header>
+            
+            {{#if custom_excerpt}}
+                <p class="essay-card-excerpt">{{custom_excerpt}}</p>
+            {{else if excerpt}}
+                <p class="essay-card-excerpt">{{excerpt words="40"}}</p>
+            {{/if}}
+            
+            {{#if primary_tag}}
+                <footer class="essay-card-tags">
+                    {{#foreach tags visibility="public"}}
+                        <a href="{{url}}">{{name}}</a>{{#unless @last}}, {{/unless}}
+                    {{/foreach}}
+                </footer>
+            {{/if}}
+        </article>
+    {{/foreach}}
+</section>
+
+{{> pagination}}
