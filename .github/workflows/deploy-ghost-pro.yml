@@ -1,0 +1,147 @@
+name: Deploy Theme to Ghost Pro
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-staging:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      GHOST_ADMIN_API_URL: ${{ secrets.STAGING_GHOST_ADMIN_API_URL }}
+      GHOST_ADMIN_API_KEY: ${{ secrets.STAGING_GHOST_ADMIN_API_KEY }}
+    steps:
+      - name: Validate secrets are configured
+        run: |
+          if [ -z "${GHOST_ADMIN_API_URL}" ] || [ -z "${GHOST_ADMIN_API_KEY}" ]; then
+            echo "Missing staging secrets. Configure STAGING_GHOST_ADMIN_API_URL and STAGING_GHOST_ADMIN_API_KEY in repo settings."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Validate theme
+        run: yarn test:ci
+
+      - name: Build theme zip
+        run: yarn zip
+
+      - name: Upload and activate theme (staging)
+        run: |
+          set -euo pipefail
+
+          ADMIN_URL="${GHOST_ADMIN_API_URL%/}"
+          ZIP_FILE=$(ls dist/*.zip | head -n 1)
+          THEME_NAME=$(basename "$ZIP_FILE" .zip)
+
+          ID="${GHOST_ADMIN_API_KEY%%:*}"
+          SECRET="${GHOST_ADMIN_API_KEY##*:}"
+
+          now=$(date +%s)
+          exp=$((now + 300))
+
+          b64url() {
+            openssl base64 -A | tr '+/' '-_' | tr -d '='
+          }
+
+          header=$(printf '{"alg":"HS256","typ":"JWT","kid":"%s"}' "$ID" | b64url)
+          payload=$(printf '{"iat":%s,"exp":%s,"aud":"/admin/"}' "$now" "$exp" | b64url)
+          signature=$(printf '%s' "$header.$payload" | openssl dgst -binary -sha256 -mac HMAC -macopt "hexkey:$SECRET" | b64url)
+          token="$header.$payload.$signature"
+
+          curl --fail --silent --show-error \
+            -X POST "$ADMIN_URL/themes/upload/" \
+            -H "Authorization: Ghost $token" \
+            -F "file=@$ZIP_FILE"
+
+          curl --fail --silent --show-error \
+            -X PUT "$ADMIN_URL/themes/$THEME_NAME/activate/" \
+            -H "Authorization: Ghost $token" \
+            -H "Content-Type: application/json"
+
+          echo "Staging deploy complete: $THEME_NAME"
+
+  deploy-production:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    env:
+      GHOST_ADMIN_API_URL: ${{ secrets.PRODUCTION_GHOST_ADMIN_API_URL }}
+      GHOST_ADMIN_API_KEY: ${{ secrets.PRODUCTION_GHOST_ADMIN_API_KEY }}
+    steps:
+      - name: Validate secrets are configured
+        run: |
+          if [ -z "${GHOST_ADMIN_API_URL}" ] || [ -z "${GHOST_ADMIN_API_KEY}" ]; then
+            echo "Missing production secrets. Configure PRODUCTION_GHOST_ADMIN_API_URL and PRODUCTION_GHOST_ADMIN_API_KEY in repo settings."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Validate theme
+        run: yarn test:ci
+
+      - name: Build theme zip
+        run: yarn zip
+
+      - name: Upload and activate theme (production)
+        run: |
+          set -euo pipefail
+
+          ADMIN_URL="${GHOST_ADMIN_API_URL%/}"
+          ZIP_FILE=$(ls dist/*.zip | head -n 1)
+          THEME_NAME=$(basename "$ZIP_FILE" .zip)
+
+          ID="${GHOST_ADMIN_API_KEY%%:*}"
+          SECRET="${GHOST_ADMIN_API_KEY##*:}"
+
+          now=$(date +%s)
+          exp=$((now + 300))
+
+          b64url() {
+            openssl base64 -A | tr '+/' '-_' | tr -d '='
+          }
+
+          header=$(printf '{"alg":"HS256","typ":"JWT","kid":"%s"}' "$ID" | b64url)
+          payload=$(printf '{"iat":%s,"exp":%s,"aud":"/admin/"}' "$now" "$exp" | b64url)
+          signature=$(printf '%s' "$header.$payload" | openssl dgst -binary -sha256 -mac HMAC -macopt "hexkey:$SECRET" | b64url)
+          token="$header.$payload.$signature"
+
+          curl --fail --silent --show-error \
+            -X POST "$ADMIN_URL/themes/upload/" \
+            -H "Authorization: Ghost $token" \
+            -F "file=@$ZIP_FILE"
+
+          curl --fail --silent --show-error \
+            -X PUT "$ADMIN_URL/themes/$THEME_NAME/activate/" \
+            -H "Authorization: Ghost $token" \
+            -H "Content-Type: application/json"
+
+          echo "Production deploy complete: $THEME_NAME"
