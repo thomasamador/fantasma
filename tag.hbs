@@ -1,43 +1,22 @@
-{{!--
-=============================================================================
-TAG ARCHIVE TEMPLATE
-=============================================================================
-
-Displays posts filtered by tag.
-URL: /tag/{slug}/
-
-STRUCTURE:
-- Archive header with tag name, description, and post count
-- Post feed (uses post-card partial)
-- Pagination
-
-SPECIAL TAG TEMPLATES:
-Internal tags (#tagname) use custom templates:
-- #art   → tag-hash-art.hbs (gallery layout)
-- #essay → tag-hash-essay.hbs
-- #story → tag-hash-story.hbs
-- #note  → tag-hash-note.hbs
-
-CSS: See assets/css/custom.css §11 (Archive Pages)
---}}
 {{!< default}}
+{{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
 
-<section class="tag-archive outer">
-    <div class="inner">
-        <header class="archive-header">
-            <h1 class="archive-title">{{tag.name}}</h1>
-            {{#if tag.description}}
-                <p class="archive-description">{{tag.description}}</p>
-            {{/if}}
-            <span class="archive-count">{{plural tag.count.posts empty="No posts" singular="% post" plural="% posts"}}</span>
-        </header>
-        
-        <div class="post-feed">
-            {{#foreach posts}}
-                {{> post-card}}
-            {{/foreach}}
-        </div>
-        
-        {{> pagination}}
-    </div>
-</section>
+<main class="gh-main gh-outer">
+
+    {{#tag}}
+        <section class="gh-archive{{#if feature_image}} has-image{{/if}}{{#if @custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
+            <div class="gh-archive-inner">
+                <header class="gh-archive-wrapper">
+                    <h1 class="gh-article-title is-title">{{name}}</h1>
+                    {{#if description}}
+                        <p class="gh-article-excerpt">{{description}}</p>
+                    {{/if}}
+                </header>
+                {{> "feature-image"}}
+            </div>
+        </section>
+    {{/tag}}
+
+    {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=@custom.show_publication_info_sidebar}}
+
+</main>
