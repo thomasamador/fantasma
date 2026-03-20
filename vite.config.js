@@ -11,6 +11,9 @@ export default defineConfig({
         outDir: 'assets/built',
         emptyOutDir: true,
         sourcemap: true,
+        watch: {
+            exclude: ['assets/built/**'],
+        },
         rollupOptions: {
             input: {
                 screen: path.resolve(__dirname, 'assets/css/screen.css'),
