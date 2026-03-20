@@ -67,15 +67,29 @@ jobs:
           signature=$(printf '%s' "$header.$payload" | openssl dgst -binary -sha256 -mac HMAC -macopt "hexkey:$SECRET" | b64url)
           token="$header.$payload.$signature"
 
-          curl --fail --silent --show-error \
+          UPLOAD_RESPONSE=$(curl --silent --show-error \
+            -w "\nHTTP_STATUS:%{http_code}" \
             -X POST "$ADMIN_URL/themes/upload/" \
             -H "Authorization: Ghost $token" \
-            -F "file=@$ZIP_FILE"
+            -F "file=@$ZIP_FILE")
+          UPLOAD_STATUS=$(echo "$UPLOAD_RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          UPLOAD_BODY=$(echo "$UPLOAD_RESPONSE" | sed '/HTTP_STATUS:/d')
+          echo "Upload response ($UPLOAD_STATUS): $UPLOAD_BODY"
+          if [ "$UPLOAD_STATUS" -lt 200 ] || [ "$UPLOAD_STATUS" -ge 300 ]; then
+            exit 1
+          fi
 
-          curl --fail --silent --show-error \
+          ACTIVATE_RESPONSE=$(curl --silent --show-error \
+            -w "\nHTTP_STATUS:%{http_code}" \
             -X PUT "$ADMIN_URL/themes/$THEME_NAME/activate/" \
             -H "Authorization: Ghost $token" \
-            -H "Content-Type: application/json"
+            -H "Content-Type: application/json")
+          ACTIVATE_STATUS=$(echo "$ACTIVATE_RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          ACTIVATE_BODY=$(echo "$ACTIVATE_RESPONSE" | sed '/HTTP_STATUS:/d')
+          echo "Activate response ($ACTIVATE_STATUS): $ACTIVATE_BODY"
+          if [ "$ACTIVATE_STATUS" -lt 200 ] || [ "$ACTIVATE_STATUS" -ge 300 ]; then
+            exit 1
+          fi
 
           echo "Staging deploy complete: $THEME_NAME"
 
@@ -134,14 +148,28 @@ jobs:
           signature=$(printf '%s' "$header.$payload" | openssl dgst -binary -sha256 -mac HMAC -macopt "hexkey:$SECRET" | b64url)
           token="$header.$payload.$signature"
 
-          curl --fail --silent --show-error \
+          UPLOAD_RESPONSE=$(curl --silent --show-error \
+            -w "\nHTTP_STATUS:%{http_code}" \
             -X POST "$ADMIN_URL/themes/upload/" \
             -H "Authorization: Ghost $token" \
-            -F "file=@$ZIP_FILE"
+            -F "file=@$ZIP_FILE")
+          UPLOAD_STATUS=$(echo "$UPLOAD_RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          UPLOAD_BODY=$(echo "$UPLOAD_RESPONSE" | sed '/HTTP_STATUS:/d')
+          echo "Upload response ($UPLOAD_STATUS): $UPLOAD_BODY"
+          if [ "$UPLOAD_STATUS" -lt 200 ] || [ "$UPLOAD_STATUS" -ge 300 ]; then
+            exit 1
+          fi
 
-          curl --fail --silent --show-error \
+          ACTIVATE_RESPONSE=$(curl --silent --show-error \
+            -w "\nHTTP_STATUS:%{http_code}" \
             -X PUT "$ADMIN_URL/themes/$THEME_NAME/activate/" \
             -H "Authorization: Ghost $token" \
-            -H "Content-Type: application/json"
+            -H "Content-Type: application/json")
+          ACTIVATE_STATUS=$(echo "$ACTIVATE_RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          ACTIVATE_BODY=$(echo "$ACTIVATE_RESPONSE" | sed '/HTTP_STATUS:/d')
+          echo "Activate response ($ACTIVATE_STATUS): $ACTIVATE_BODY"
+          if [ "$ACTIVATE_STATUS" -lt 200 ] || [ "$ACTIVATE_STATUS" -ge 300 ]; then
+            exit 1
+          fi
 
           echo "Production deploy complete: $THEME_NAME"
