@@ -4,17 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Fantasma is a Ghost theme (v1.5.0, requires Ghost ≥5.0.0), based on the TryGhost Source theme. It uses Handlebars templating, PostCSS, and Gulp for the build pipeline.
+Fantasma is a Ghost theme (v1.5.0, requires Ghost ≥5.0.0), based on the TryGhost Source theme. It uses Handlebars templating, Tailwind CSS v4, and Vite for the build pipeline.
 
 ## Commands
 
 ```bash
-npm install                 # Install dependencies
-npm run dev                 # Build and watch for changes (Vite --watch)
-npm run build               # One-off production build
-npm run zip                 # Package theme into deployable zip (dist/source.zip)
-npm run test                # Validate theme with gscan
-npm run test:ci             # Validate with fatal/verbose mode (used in CI)
+pnpm install                # Install dependencies
+./dev.sh                    # Start Ghost (if not running) + Vite watch mode
+pnpm dev                    # Vite watch mode only
+pnpm build                  # One-off production build
+pnpm zip                    # Package theme into deployable zip (dist/fantasma.zip)
+pnpm test                   # Validate theme with gscan
+pnpm test:ci                # Validate with fatal/verbose mode (used in CI)
+pnpm check                  # Lint + format check (Biome)
+pnpm check:write            # Lint + format, auto-fix (Biome)
 ```
 
 ## Architecture
@@ -36,7 +39,7 @@ Reusable components live in `partials/`:
 
 ### Assets & Build
 
-**Build tool:** Vite with `@tailwindcss/vite`. No dev server — Ghost serves pages. Use `npm run dev` (Vite watch mode) alongside a local Ghost instance.
+**Build tool:** Vite with `@tailwindcss/vite`. No dev server — Ghost serves pages. Use `./dev.sh` to start everything, or `pnpm dev` for watch mode alone alongside a running Ghost instance.
 
 - `assets/css/screen.css` → Tailwind v4 + Vite → `assets/built/screen.css`
 - `assets/js/source.js` → Vite/Rollup → `assets/built/source.js`
@@ -80,6 +83,7 @@ Output filenames have no hashes — Ghost's `{{asset}}` helper handles cache-bus
 Handled by `.github/workflows/deploy-ghost-pro.yml`:
 - Push to `main` → staging deploy
 - Push tag `v*` → production deploy
-- Workflow: `npm run test:ci` → `npm run zip` → upload + activate via Ghost Admin API (JWT auth)
+- Workflow: `pnpm test:ci` → `pnpm zip` → upload + activate via Ghost Admin API (JWT auth)
+- Only check staging deploy after changes to the workflow file, zip script, or package manager config — not for routine theme changes
 
 Required secrets: `STAGING_GHOST_ADMIN_API_URL`, `STAGING_GHOST_ADMIN_API_KEY`, `PRODUCTION_GHOST_ADMIN_API_URL`, `PRODUCTION_GHOST_ADMIN_API_KEY`
