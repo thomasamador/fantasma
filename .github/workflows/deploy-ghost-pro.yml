@@ -33,22 +33,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Validate theme
-        run: yarn test:ci
+        run: npm run test:ci
 
       - name: Build theme zip
-        run: yarn zip
+        run: npm run zip
 
       - name: Upload and activate theme (staging)
         run: |
           set -euo pipefail
 
-          ADMIN_URL="${GHOST_ADMIN_API_URL%/}"
+          ADMIN_URL="${GHOST_ADMIN_API_URL%/}/ghost/api/admin"
           ZIP_FILE=$(ls dist/*.zip | head -n 1)
           THEME_NAME=$(basename "$ZIP_FILE" .zip)
 
@@ -100,22 +100,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Validate theme
-        run: yarn test:ci
+        run: npm run test:ci
 
       - name: Build theme zip
-        run: yarn zip
+        run: npm run zip
 
       - name: Upload and activate theme (production)
         run: |
           set -euo pipefail
 
-          ADMIN_URL="${GHOST_ADMIN_API_URL%/}"
+          ADMIN_URL="${GHOST_ADMIN_API_URL%/}/ghost/api/admin"
           ZIP_FILE=$(ls dist/*.zip | head -n 1)
           THEME_NAME=$(basename "$ZIP_FILE" .zip)
 
