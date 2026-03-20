@@ -1,8 +1,8 @@
-function dropdown() {
+export function initDropdown(imagesLoaded) {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
 
     const head = document.querySelector('.gh-navigation');
-    const menu = head.querySelector('.gh-navigation-menu');
+    const menu = head?.querySelector('.gh-navigation-menu');
     const nav = menu?.querySelector('.nav');
     if (!nav) return;
 
@@ -72,7 +72,7 @@ function dropdown() {
                 head.classList.add('is-dropdown-open');
             }
         });
-    }
+    };
 
     imagesLoaded(logo, function () {
         makeDropdown();

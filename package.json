@@ -7,15 +7,14 @@
         "ghost": ">=5.0.0"
     },
     "license": "MIT",
+    "type": "module",
     "scripts": {
-        "dev": "gulp",
-        "zip": "gulp zip",
+        "dev": "vite build --watch",
+        "build": "vite build",
+        "zip": "node scripts/zip.mjs",
         "test": "gscan .",
         "test:ci": "gscan --fatal --verbose .",
-        "pretest": "gulp build",
-        "preship": "yarn test",
-        "ship": "STATUS=$(git status --porcelain); echo $STATUS; if [ -z \"$STATUS\" ]; then yarn version && git push --follow-tags; else echo \"Uncomitted changes found.\" && exit 1; fi",
-        "postship": "git fetch && gulp release"
+        "pretest": "yarn build"
     },
     "author": {
         "name": "Ghost Foundation",
@@ -41,21 +40,11 @@
     "bugs": "https://github.com/TryGhost/Source/issues",
     "contributors": "https://github.com/TryGhost/Source/graphs/contributors",
     "devDependencies": {
-        "@tryghost/release-utils": "0.8.1",
-        "autoprefixer": "10.4.24",
-        "beeper": "2.1.0",
-        "cssnano": "7.1.2",
+        "@tailwindcss/vite": "^4.2.2",
+        "archiver": "^7.0.1",
+        "glob": "^13.0.6",
         "gscan": "5.2.4",
-        "gulp": "5.0.1",
-        "gulp-concat": "2.6.1",
-        "gulp-livereload": "4.0.2",
-        "gulp-postcss": "10.0.0",
-        "gulp-uglify": "3.0.2",
-        "gulp-zip": "6.1.0",
-        "inquirer": "13.2.2",
-        "postcss": "8.5.6",
-        "postcss-easy-import": "4.0.0",
-        "pump": "3.0.3"
+        "vite": "^8.0.1"
     },
     "browserslist": [
         "defaults"
@@ -213,5 +202,10 @@
         "extends": [
             "@tryghost:theme"
         ]
+    },
+    "dependencies": {
+        "imagesloaded": "^5.0.0",
+        "photoswipe": "^5.4.4",
+        "reframe.js": "^4.0.2"
     }
 }

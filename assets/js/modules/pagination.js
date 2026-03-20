@@ -1,4 +1,4 @@
-function pagination(isInfinite = true, done, isMasonry = false) {
+export function initPagination(isInfinite = true, done, isMasonry = false) {
     const feedElement = document.querySelector('.gh-feed');
     if (!feedElement) return;
 
@@ -60,7 +60,7 @@ function pagination(isInfinite = true, done, isMasonry = false) {
         if (target.getBoundingClientRect().top <= window.innerHeight && document.querySelector('link[rel=next]')) {
             await loadNextPage();
         }
-    }
+    };
 
     const callback = async function (entries) {
         if (loading) return;
@@ -68,7 +68,6 @@ function pagination(isInfinite = true, done, isMasonry = false) {
         loading = true;
 
         if (entries[0].isIntersecting) {
-            // keep loading next page until target is out of the viewport or we've loaded the last page
             if (!isMasonry) {
                 while (target.getBoundingClientRect().top <= window.innerHeight && document.querySelector('link[rel=next]')) {
                     await loadNextPage();
