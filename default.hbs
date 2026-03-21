@@ -17,30 +17,24 @@
     {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
 
-    {{!-- Custom background color --}}
-    <style>
-        :root {
-            --background-color: {{@custom.site_background_color}}
-        }
-    </style>
-
+    {{!-- Theme initialisation — runs before paint to avoid flash --}}
     <script>
-        /* The script for calculating the color contrast has been taken from
-        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
-        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-        accentColor = accentColor.trim().slice(1);
+        (function() {
+            var saved = localStorage.getItem('fantasma-theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dracula' : 'light');
+            var customTokens = localStorage.getItem('fantasma-custom-tokens');
 
-        if (accentColor.length === 3) {
-            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
-        }
+            if (theme === 'custom' && customTokens) {
+                var style = document.createElement('style');
+                style.id = 'fantasma-custom-theme';
+                style.textContent = '[data-theme="custom"] {\n' + customTokens + '\n}';
+                document.head.appendChild(style);
+            }
 
-        var r = parseInt(accentColor.substr(0, 2), 16);
-        var g = parseInt(accentColor.substr(2, 2), 16);
-        var b = parseInt(accentColor.substr(4, 2), 16);
-        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-        var textColor = (yiq >= 128) ? 'dark' : 'light';
-
-        document.documentElement.className = `has-${textColor}-text`;
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.className = (theme === 'light') ? 'has-dark-text' : 'has-light-text';
+        })();
     </script>
 
     {{!-- This tag outputs all your advanced SEO meta, structured data, and other important settings, it should always be the last tag before the closing head tag --}}

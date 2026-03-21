@@ -1,0 +1,264 @@
+{{!< default}}
+
+<style>
+.sg-section {
+    padding-top: 48px;
+    margin-bottom: 64px;
+    border-top: 1px solid var(--color-border);
+}
+.sg-section:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+.sg-heading {
+    margin: 0 0 28px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-secondary-text);
+}
+.sg-swatches {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+.sg-swatch-block {
+    height: 64px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    margin-bottom: 8px;
+}
+.sg-swatch-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.sg-swatch-var {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-secondary-text);
+    margin-top: 3px;
+}
+.sg-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.sg-type-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.sg-type-row > * {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border);
+    margin: 0;
+}
+.sg-type-row > *:last-child {
+    border-bottom: none;
+}
+.sg-wide {
+    padding-top: 48px;
+    margin-bottom: 64px;
+    border-top: 1px solid var(--color-border);
+}
+.sg-wide-inner {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 max(4vmin, 20px);
+    margin-bottom: 24px;
+}
+.sg-surface {
+    padding: 40px;
+    border-radius: 8px;
+    background: var(--color-lighter-gray);
+}
+.sg-surface-accent {
+    padding: 40px;
+    border-radius: 8px;
+    background: var(--ghost-accent-color);
+}
+</style>
+
+<main class="gh-main">
+<article class="gh-article">
+
+<div class="gh-article-header gh-canvas">
+    <h1 class="gh-article-title is-title">Style Guide</h1>
+    <p class="gh-article-excerpt is-body">Visual reference for all theme components and design tokens.</p>
+</div>
+
+<div class="gh-canvas">
+
+    {{!-- ─── 1. Color Tokens ──────────────────────────────────── --}}
+    <section class="sg-section">
+        <h2 class="sg-heading">Color Tokens</h2>
+        <div class="sg-swatches">
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-base-100)"></div>
+                <p class="sg-swatch-name">Background</p>
+                <p class="sg-swatch-var">--color-base-100</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-base-200)"></div>
+                <p class="sg-swatch-name">Surface</p>
+                <p class="sg-swatch-var">--color-base-200</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-base-300)"></div>
+                <p class="sg-swatch-name">Border</p>
+                <p class="sg-swatch-var">--color-base-300</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-base-content)"></div>
+                <p class="sg-swatch-name">Text</p>
+                <p class="sg-swatch-var">--color-base-content</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-primary)"></div>
+                <p class="sg-swatch-name">Primary</p>
+                <p class="sg-swatch-var">--color-primary</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-secondary)"></div>
+                <p class="sg-swatch-name">Secondary</p>
+                <p class="sg-swatch-var">--color-secondary</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-accent)"></div>
+                <p class="sg-swatch-name">Accent</p>
+                <p class="sg-swatch-var">--color-accent</p>
+            </div>
+            <div>
+                <div class="sg-swatch-block" style="background: var(--color-neutral)"></div>
+                <p class="sg-swatch-name">Neutral</p>
+                <p class="sg-swatch-var">--color-neutral</p>
+            </div>
+        </div>
+    </section>
+
+    {{!-- ─── 2. Typography ─────────────────────────────────────── --}}
+    <section class="sg-section">
+        <h2 class="sg-heading">Typography</h2>
+        <div class="sg-type-row">
+            <h1 class="is-title" style="font-size:clamp(2.125rem,1.36vw + 1.78125rem,2.875rem);letter-spacing:-0.022em;line-height:1.1">Article Title — The quick brown fox jumps</h1>
+            <h2 class="is-title" style="font-size:1.875rem;letter-spacing:-0.02em;line-height:1.2">Heading 2 — The quick brown fox jumps</h2>
+            <h3 class="is-title" style="font-size:1.5rem;letter-spacing:-0.02em;line-height:1.2">Heading 3 — The quick brown fox jumps over</h3>
+            <h4 class="is-title" style="font-size:1.25rem;letter-spacing:-0.017em;line-height:1.2">Heading 4 — The quick brown fox jumps over the lazy dog</h4>
+            <p class="is-body" style="font-size:1.0625rem;line-height:1.6">Body — The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. Pack my box with five dozen liquor jugs.</p>
+            <p style="font-size:1.0625rem;line-height:1.6;color:var(--color-secondary-text)">Secondary text — The quick brown fox jumps over the lazy dog.</p>
+            <p>Link — <a href="#">The quick brown fox jumps over the lazy dog</a></p>
+            <p style="font-family:var(--font-mono);font-size:0.9375rem">Monospace — const theme = "fantasma"; // oklch color space</p>
+            <p style="font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-secondary-text)">Label — Category · Tag · Section</p>
+        </div>
+    </section>
+
+    {{!-- ─── 3. Components ─────────────────────────────────────── --}}
+    <section class="sg-section">
+        <h2 class="sg-heading">Buttons</h2>
+        <div class="sg-row" style="margin-bottom: 24px">
+            <a class="gh-button">Subscribe</a>
+            <a class="gh-button" style="opacity:0.5;pointer-events:none">Disabled</a>
+            <button class="gh-icon-button" aria-label="Toggle theme">
+                {{> "icons/sun"}}
+            </button>
+            <button class="gh-icon-button" aria-label="Search">
+                {{> "icons/search"}}
+            </button>
+            <button class="gh-icon-button" aria-label="Menu">
+                {{> "icons/burger"}}
+            </button>
+        </div>
+
+        <div class="sg-surface-accent" style="margin-top: 16px">
+            <div class="sg-row" style="margin-bottom: 16px">
+                <p class="is-title" style="color: oklch(100% 0 0); font-size: 1.5rem; font-weight: 700; margin: 0 auto 0 0">On accent background</p>
+                <a class="gh-button" style="background: var(--color-base-100); color: var(--color-base-content)">Subscribe</a>
+            </div>
+        </div>
+    </section>
+
+    {{!-- ─── 4. Subscribe Form ──────────────────────────────────── --}}
+    <section class="sg-section">
+        <h2 class="sg-heading">Subscribe Form</h2>
+        <p style="margin-bottom: 24px; color: var(--color-secondary-text); font-size: 0.875rem">On page background (<code>base-100</code>)</p>
+        {{> "email-subscription" email_field_id="sg-form-1"}}
+
+        <p style="margin: 32px 0 24px; color: var(--color-secondary-text); font-size: 0.875rem">On surface background (<code>base-200</code>)</p>
+        <div style="padding: 40px; background: var(--color-lighter-gray); border-radius: 8px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
+            <p class="is-title" style="font-size: 1.5rem; font-weight: 700; margin: 0">Get the newsletter</p>
+            {{> "email-subscription" email_field_id="sg-form-2"}}
+        </div>
+    </section>
+
+    {{!-- ─── 5. Content Typography ─────────────────────────────── --}}
+    <section class="sg-section">
+        <h2 class="sg-heading">Content Typography</h2>
+        <div class="gh-content">
+            <h2>Post content heading 2</h2>
+            <p>A paragraph of post body text. The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump.</p>
+            <h3>Heading 3 in content</h3>
+            <p>Another paragraph following a heading. <a href="#">Inline link text</a> and <strong>bold text</strong> and <em>italic text</em> and <code>inline code</code>.</p>
+            <blockquote>A blockquote sits here. The quick brown fox jumps over the lazy dog, and the lazy dog didn't care at all.</blockquote>
+            <p>Paragraph after blockquote.</p>
+            <pre><code>// Code block
+function initTheme() {
+    const saved = localStorage.getItem('fantasma-theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+}</code></pre>
+            <hr>
+            <ul>
+                <li>Unordered list item one</li>
+                <li>Unordered list item two</li>
+                <li>Unordered list item three</li>
+            </ul>
+            <ol>
+                <li>Ordered list item one</li>
+                <li>Ordered list item two</li>
+                <li>Ordered list item three</li>
+            </ol>
+        </div>
+    </section>
+
+</div>{{!-- end gh-canvas --}}
+
+{{!-- ─── 6. Post Cards — List ──────────────────────────────── --}}
+<div class="sg-wide">
+    <div class="sg-wide-inner">
+        <h2 class="sg-heading">Post Feed — List</h2>
+    </div>
+    <section class="gh-container is-list gh-outer">
+        <div class="gh-container-inner gh-inner">
+            <div class="gh-feed">
+                {{#get "posts" limit="3" include="authors"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </div>
+    </section>
+</div>
+
+{{!-- ─── 7. Post Cards — Grid ──────────────────────────────── --}}
+<div class="sg-wide">
+    <div class="sg-wide-inner">
+        <h2 class="sg-heading">Post Feed — Grid</h2>
+    </div>
+    <section class="gh-container is-grid gh-outer">
+        <div class="gh-container-inner gh-inner">
+            <div class="gh-feed">
+                {{#get "posts" limit="6" include="authors"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </div>
+    </section>
+</div>
+
+</article>
+</main>

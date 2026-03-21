@@ -45,6 +45,7 @@
         "@biomejs/biome": "^2.4.8",
         "@tailwindcss/vite": "^4.2.2",
         "archiver": "^7.0.1",
+        "daisyui": "^5.5.19",
         "glob": "^13.0.6",
         "gscan": "5.2.4",
         "vite": "^8.0.1"
@@ -84,10 +85,6 @@
                     "Stacked"
                 ],
                 "default": "Logo in the middle"
-            },
-            "site_background_color": {
-                "type": "color",
-                "default": "#ffffff"
             },
             "header_and_footer_color": {
                 "type": "select",
