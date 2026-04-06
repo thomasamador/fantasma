@@ -2580,6 +2580,289 @@ body[class*=" gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-hea
     }
 }
 
+
+/* ==========================================================================
+   22. Feed Filters
+   ========================================================================== */
+
+.gh-feed-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 0 24px;
+}
+
+.gh-feed-filter-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.gh-filter-btn,
+.gh-sort-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    font-size: 0.8125rem;
+    font-weight: 550;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-secondary-text);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.gh-filter-btn:hover,
+.gh-sort-btn:hover {
+    border-color: var(--color-darker-gray);
+    color: var(--color-text);
+}
+
+.gh-filter-btn.is-active {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+}
+
+.gh-feed-sort {
+    display: flex;
+    gap: 4px;
+}
+
+.gh-sort-btn.is-active {
+    background: oklch(from var(--color-text) l c h / 0.08);
+    border-color: var(--color-darker-gray);
+    color: var(--color-text);
+}
+
+@media (max-width: 600px) {
+    .gh-feed-filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ==========================================================================
+   23. Post Type Cards
+   ========================================================================== */
+
+/* --- Note card --- */
+
+.gh-card-note {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.gh-card-note .gh-card-link {
+    display: block;
+    padding: 20px 0;
+}
+
+.gh-card-note .gh-card-link:hover {
+    opacity: 1;
+}
+
+.gh-card-note .gh-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gh-card-note-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text);
+    margin: 0;
+    white-space: pre-line;
+}
+
+.gh-card-note .gh-card-note-image {
+    aspect-ratio: auto;
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 320px;
+}
+
+.gh-card-note .gh-card-note-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gh-card-note .gh-card-meta {
+    margin-top: 0;
+}
+
+/* --- Sketch card --- */
+
+.gh-card-sketch .gh-card-link {
+    display: block;
+}
+
+.gh-card-sketch .gh-card-link:hover {
+    opacity: 1;
+}
+
+.gh-card-sketch-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 4px;
+    background: oklch(from var(--color-text) l c h / 0.04);
+}
+
+.gh-card-sketch-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gh-card-sketch .gh-card-link:hover .gh-card-sketch-image img {
+    transform: scale(1.02);
+}
+
+.gh-card-sketch .gh-card-wrapper {
+    padding: 10px 2px 4px;
+}
+
+.gh-card-sketch-medium {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-secondary-text);
+    margin: 0 0 4px;
+}
+
+.gh-card-sketch-caption {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-secondary-text);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- Essay card --- */
+
+.gh-card-essay-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ghost-accent-color, var(--color-secondary-text));
+    margin: 0 0 6px;
+}
+
+.gh-card-reading-time {
+    font-size: 0.8125rem;
+    color: var(--color-secondary-text);
+}
+
+.gh-card-reading-time + .gh-card-date::before {
+    content: "·";
+    margin: 0 4px;
+    color: var(--color-secondary-text);
+}
+
+/* --- Story card --- */
+
+.gh-card-story .gh-card-link {
+    display: block;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.gh-card-story .gh-card-link:hover {
+    opacity: 1;
+}
+
+.gh-card-story .gh-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gh-card-story-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-secondary-text);
+    margin: 0;
+}
+
+.gh-card-story-title {
+    font-style: italic;
+    margin: 0;
+}
+
+.gh-card-story-teaser {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-secondary-text);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- Update card --- */
+
+.gh-card-update {
+    width: 100%;
+}
+
+.gh-card-update .gh-card-link {
+    display: block;
+    padding: 16px 20px;
+    border-left: 3px solid var(--ghost-accent-color, var(--color-secondary-text));
+    background: oklch(from var(--color-text) l c h / 0.04);
+    border-radius: 0 6px 6px 0;
+}
+
+.gh-card-update .gh-card-link:hover {
+    opacity: 1;
+    background: oklch(from var(--color-text) l c h / 0.07);
+}
+
+.gh-card-update .gh-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.gh-card-update-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ghost-accent-color, var(--color-secondary-text));
+    margin: 0;
+}
+
+.gh-card-update-title {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.gh-card-update-text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-secondary-text);
+    margin: 0;
+}
+
+.gh-card-update .gh-card-meta {
+    margin-top: 4px;
+}
+
 } /* end @layer components */
 
 /* ==========================================================================

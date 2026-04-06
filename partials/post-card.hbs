@@ -1,5 +1,21 @@
-<article class="gh-card {{post_class}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}}">
+{{!-- Post card router: dispatch to the appropriate card variant based on the post's internal tag.
+     Posts tagged #note, #sketch, #essay, #story, or #update get a dedicated layout;
+     all other posts fall through to the default card below. --}}
+{{#has tag="hash-note"}}
+    {{> "post-card-note"}}
+{{else has tag="hash-sketch"}}
+    {{> "post-card-sketch"}}
+{{else has tag="hash-essay"}}
+    {{> "post-card-essay"}}
+{{else has tag="hash-story"}}
+    {{> "post-card-story"}}
+{{else has tag="hash-update"}}
+    {{> "post-card-update"}}
+{{else}}
+{{!-- Default card: generic layout for posts without a recognised type tag --}}
+<article class="gh-card {{post_class}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}}" data-post-type="other" data-date="{{date format="X"}}">
     <a class="gh-card-link" href="{{url}}">
+        {{!-- Feature image: responsive WebP srcset across 6 breakpoints, only rendered when the post has an image --}}
         {{#if feature_image}}
             <figure class="gh-card-image">
                 <img
@@ -16,11 +32,15 @@
                 >
             </figure>
         {{/if}}
+        {{!-- Card body: optional primary tag label, title, and excerpt --}}
         <div class="gh-card-wrapper">
             {{#if primary_tag}}
                 <p class="gh-card-tag">{{primary_tag.name}}</p>
             {{/if}}
+            
             <h3 class="gh-card-title is-title">{{title}}</h3>
+            
+            {{!-- Excerpt: show custom excerpt if set; otherwise fall back to auto-generated excerpt --}}
             {{#if custom_excerpt}}
                 <p class="gh-card-excerpt is-body">{{custom_excerpt}}</p>
             {{/if}}
@@ -29,6 +49,8 @@
                     <p class="gh-card-excerpt is-body">{{excerpt}}</p>
                 {{/if}}
             {{/unless}}
+            {{!-- Footer metadata: lock icon for non-public posts, optional author, and publish date.
+                 HTML comments between spans are intentional whitespace control — do not remove. --}}
             <footer class="gh-card-meta">
                 {{#unless access}}
                     {{^has visibility="public"}}
@@ -45,3 +67,4 @@
         </div>
     </a>
 </article>
+{{/has}}

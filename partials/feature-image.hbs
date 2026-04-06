@@ -1,3 +1,6 @@
+{{!-- Feature image: renders a full-width responsive image for the post/page.
+     Only output when the post has a feature_image set. Uses a 5-breakpoint srcset
+     for automatic resolution switching, with a max display width of 1120px. --}}
 {{#if feature_image}}
     <figure class="gh-article-image">
         <img
@@ -10,6 +13,7 @@
             src="{{img_url feature_image size="xl"}}"
             alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
         >
+        {{!-- Optional caption: rendered as a <figcaption> when the author provides one in the editor --}}
         {{#if feature_image_caption}}
             <figcaption>{{feature_image_caption}}</figcaption>
         {{/if}}

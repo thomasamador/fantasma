@@ -1,0 +1,39 @@
+{{!-- Sketch card: an image-led card for visual posts (tagged #sketch) --}}
+<article class="gh-card gh-card-sketch {{post_class}}" data-post-type="sketch" data-date="{{date format="X"}}">
+    <a class="gh-card-link" href="{{url}}">
+        {{!-- Feature image: large responsive image that dominates the card layout --}}
+        {{#if feature_image}}
+            <figure class="gh-card-image gh-card-sketch-image">
+                <img
+                    srcset="{{img_url feature_image size="xs" format="webp"}} 160w,
+                            {{img_url feature_image size="s" format="webp"}} 320w,
+                            {{img_url feature_image size="m" format="webp"}} 600w,
+                            {{img_url feature_image size="l" format="webp"}} 960w"
+                    sizes="{{#if imageSizes}}{{imageSizes}}{{else}}320px{{/if}}"
+                    src="{{img_url feature_image size="m"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}Sketch{{/if}}"
+                    {{#if lazyLoad}}loading="lazy"{{/if}}
+                >
+            </figure>
+        {{/if}}
+        {{!-- Card body: public tag indicators, optional caption, and date --}}
+        <div class="gh-card-wrapper">
+            {{!-- Show non-internal tags as medium indicator --}}
+            {{#foreach tags}}
+                {{#unless visibility "!=" "public"}}
+                    <p class="gh-card-sketch-medium">{{name}}</p>
+                {{/unless}}
+            {{/foreach}}
+            {{!-- Caption: prefer custom excerpt; fall back to auto-generated excerpt --}}
+            {{#if custom_excerpt}}
+                <p class="gh-card-sketch-caption is-body">{{custom_excerpt}}</p>
+            {{else if excerpt}}
+                <p class="gh-card-sketch-caption is-body">{{excerpt}}</p>
+            {{/if}}
+            {{!-- Footer: publish date --}}
+            <footer class="gh-card-meta">
+                <time class="gh-card-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+            </footer>
+        </div>
+    </a>
+</article>

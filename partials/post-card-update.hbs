@@ -1,0 +1,23 @@
+{{!-- Update card: a short announcement-style card (tagged #update) with optional title and text --}}
+<article class="gh-card gh-card-update {{post_class}}" data-post-type="update" data-date="{{date format="X"}}">
+    <a class="gh-card-link" href="{{url}}">
+        {{!-- Card body: "Update" type label, optional title, body text, and date --}}
+        <div class="gh-card-wrapper">
+            <p class="gh-card-update-label">Update</p>
+            {{!-- Title is optional for updates — some are title-less quick announcements --}}
+            {{#if title}}
+                <h3 class="gh-card-title gh-card-update-title is-title">{{title}}</h3>
+            {{/if}}
+            {{!-- Body text: prefer custom excerpt; fall back to auto-generated excerpt --}}
+            {{#if custom_excerpt}}
+                <p class="gh-card-update-text is-body">{{custom_excerpt}}</p>
+            {{else if excerpt}}
+                <p class="gh-card-update-text is-body">{{excerpt}}</p>
+            {{/if}}
+            {{!-- Footer: publish date only — updates intentionally omit reading time and author --}}
+            <footer class="gh-card-meta">
+                <time class="gh-card-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+            </footer>
+        </div>
+    </a>
+</article>

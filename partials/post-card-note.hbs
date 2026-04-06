@@ -1,0 +1,31 @@
+{{!-- Note card: a minimal, text-forward card for short-form posts (tagged #note) --}}
+{{!-- Renders the full post inline — no link to a separate post page --}}
+<article class="gh-card gh-card-note {{post_class}}" data-post-type="note" data-date="{{date format="X"}}">
+    <div class="gh-card-wrapper">
+        {{!-- Full post content rendered inline --}}
+        <div class="gh-card-note-content gh-content is-body">
+            {{content}}
+        </div>
+
+        {{!-- Optional inline image: shown below the text when the post has a feature image --}}
+        {{#if feature_image}}
+            <figure class="gh-card-image gh-card-note-image">
+                <img
+                    srcset="{{img_url feature_image size="xs" format="webp"}} 160w,
+                            {{img_url feature_image size="s" format="webp"}} 320w,
+                            {{img_url feature_image size="m" format="webp"}} 600w,
+                            {{img_url feature_image size="l" format="webp"}} 1000w"
+                    sizes="(min-width: 720px) 600px, calc(100vw - 2rem)"
+                    src="{{img_url feature_image size="m"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}Note image{{/if}}"
+                    loading="lazy"
+                >
+            </figure>
+        {{/if}}
+
+        {{!-- Footer: publish date only — notes intentionally omit reading time and author --}}
+        <footer class="gh-card-meta">
+            <time class="gh-card-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+        </footer>
+    </div>
+</article>

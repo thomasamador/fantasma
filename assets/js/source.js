@@ -8,6 +8,7 @@ import { initPagination } from './modules/pagination.js';
 import { initResponsiveVideos } from './modules/responsive-videos.js';
 import { initResponsiveTables } from './modules/responsive-tables.js';
 import { initThemeToggle } from './modules/theme-toggle.js';
+import { initFeedFilter } from './modules/feed-filter.js';
 
 initMobileMenu();
 initDropdown(imagesLoaded);
@@ -20,3 +21,4 @@ if (!document.body.classList.contains('home-template') && !document.body.classLi
 
 initResponsiveTables();
 initThemeToggle();
+initFeedFilter();

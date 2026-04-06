@@ -1,0 +1,25 @@
+{{!-- Story card: a fiction/narrative post card (tagged #story) with title, teaser, and metadata --}}
+<article class="gh-card gh-card-story {{post_class}}" data-post-type="story" data-date="{{date format="X"}}">
+    <a class="gh-card-link" href="{{url}}">
+        {{!-- Card body: "Fiction" type label, post title, and an excerpt teaser --}}
+        <div class="gh-card-wrapper">
+            <p class="gh-card-story-label">Fiction</p>
+            <h3 class="gh-card-title gh-card-story-title is-title">{{title}}</h3>
+            {{!-- Use excerpt (auto-generated from content start) as the teaser --}}
+            {{#if excerpt}}
+                <p class="gh-card-story-teaser is-body">{{excerpt}}</p>
+            {{/if}}
+            {{!-- Footer metadata: lock icon for members-only posts, and conditional publish date --}}
+            <footer class="gh-card-meta">
+                {{#unless access}}
+                    {{^has visibility="public"}}
+                        {{> "icons/lock"}}
+                    {{/has}}
+                {{/unless}}
+                {{#if @custom.show_publish_date}}
+                    <time class="gh-card-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                {{/if}}
+            </footer>
+        </div>
+    </a>
+</article>

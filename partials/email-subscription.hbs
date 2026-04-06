@@ -1,9 +1,16 @@
+{{!-- Email subscription form: Ghost Members signup via data-members-form.
+     Includes an email input, a submit button with three visual states
+     (default label + arrow, loading spinner, success checkmark),
+     and an error message container populated by the Members JS. --}}
 <form class="gh-form" data-members-form>
+    {{!-- Email input: Ghost's data-members-email attribute binds this to the Members API --}}
     <input class="gh-form-input" id="{{email_field_id}}" name="email" type="email" placeholder="jamie@example.com" required data-members-email>
+    {{!-- Submit button: three icon partials represent default, loading, and success states --}}
     <button class="gh-button" type="submit" aria-label="Subscribe">
         <span><span>Subscribe</span> {{> "icons/arrow"}}</span>
         {{> "icons/loader"}}
         {{> "icons/checkmark"}}
     </button>
+    {{!-- Error message: populated automatically by Ghost's Members JS on failure --}}
     <p data-members-error></p>
 </form>
