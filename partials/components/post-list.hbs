@@ -27,46 +27,46 @@
                     {{#match @custom.header_style "Highlight"}}
                         {{#if @custom.show_featured_posts}}
                             {{#match posts.length ">=" 4}}
-                                {{#foreach posts include="authors,tags" limit="16"}}
+                                {{#get "posts" include="authors,tags" limit="16"}}
                                     {{#foreach posts from="5"}}
                                         {{> "post-card" lazyLoad=true}}
                                     {{/foreach}}
-                                
+                                {{/get}}
                             {{/match}}
                         {{else}}
                             {{#match posts.length ">=" 10}}
-                                {{#foreach posts include="authors,tags" limit="22"}}
+                                {{#get "posts" include="authors,tags" limit="22"}}
                                     {{#foreach posts from="11"}}
                                         {{> "post-card" lazyLoad=true}}
                                     {{/foreach}}
-                                
+                                {{/get}}
                             {{/match}}
                         {{/if}}
                     {{else match @custom.header_style "Magazine"}}
                         {{#match posts.length ">=" 7}}
-                            {{#foreach posts include="authors,tags" limit="19"}}
+                            {{#get "posts" include="authors,tags" limit="19"}}
                                 {{#foreach posts from="8"}}
                                     {{> "post-card" lazyLoad=true}}
                                 {{/foreach}}
-                            
+                            {{/get}}
                         {{/match}}
                     {{else}}
-                        {{#foreach posts include="authors,tags" limit="12"}}
+                        {{#get "posts" include="authors,tags" limit="12"}}
                             {{#foreach posts}}
                                 {{> "post-card" lazyLoad=true}}
                             {{/foreach}}
-                        
+                        {{/get}}
                     {{/match}}
                 {{/match}}
 
                 {{!-- All posts --}}
                 {{#match feed "index"}}
                     {{#match pagination.page 2}}
-                        {{#foreach posts include="authors,tags" limit=@config.posts_per_page as |recent|}}
+                        {{#get "posts" include="authors,tags" limit=@config.posts_per_page as |recent|}}
                             {{#foreach recent}}
                                 {{> "post-card"}}
                             {{/foreach}}
-                        
+                        {{/get}}
                     {{/match}}
                     {{#foreach posts}}
                         {{> "post-card" lazyLoad=true}}
